@@ -1,7 +1,7 @@
 <device-admin xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-policies>
-        <watch-login />
         <disable-keyguard-features/>
-        <wipe-data/>
+        <watch-login />
+        <!-- wipe-data/-->
     </uses-policies>
 </device-admin>
