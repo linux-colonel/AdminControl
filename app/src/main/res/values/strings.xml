@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">AdminControl</string>
 
-    <!-- Strings related to Settings -->
-
-    <!-- Non-boilerplate strings (TODO: remove boilerplate and this comment) -->
+    <!-- General app descriptions -->
     <string name="activity_device_admin_label">Advanced Security Settings</string>
     <string name="permission_device_admin_label">Admin Control</string>
     <string name="device_admin_description">Android has APIs for fine-grained control of the security of your device.
     This permission allows the app to access those APIs.
     </string>
+
+    <!-- settings labels -->
+    <string name="pref_disable_fingerprint_label">Disable fingerprint on Lock Screen</string>
 </resources>
