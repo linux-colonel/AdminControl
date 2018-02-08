@@ -2,6 +2,9 @@ package com.davidshewitt.admincontrol;
 
 
 import android.annotation.TargetApi;
+import android.app.admin.DevicePolicyManager;
+import android.bluetooth.BluetoothClass;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -9,9 +12,9 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 
 import java.util.List;
@@ -28,6 +31,35 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
+
+    private DevicePolicyManager mDPM;
+    private ComponentName mDeviceOwnerComponent;
+
+    /**
+     * Preference change listener for setting fingerprint policy on the Lock Screen.
+     *
+     */
+    private static Preference.OnPreferenceChangeListener sFingerprintLockscreenListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object o) {
+            DevicePolicyManager dpm = ((ControlYourDeviceActivity)preference.getContext()).getmDPM();
+            ComponentName deviceOwnerComponent = ((ControlYourDeviceActivity)preference.getContext()).getmDeviceOwnerComponent();
+            boolean bValue = (Boolean)o;
+            int keyguardDisabledFeatures;
+            if(bValue){
+                keyguardDisabledFeatures = dpm.getKeyguardDisabledFeatures(deviceOwnerComponent) | DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT;
+            } else {
+                keyguardDisabledFeatures = dpm.getKeyguardDisabledFeatures(deviceOwnerComponent) & (~DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT);
+            }
+            try {
+                dpm.setKeyguardDisabledFeatures(deviceOwnerComponent, keyguardDisabledFeatures);
+            } catch (SecurityException s) {
+                return false;
+            }
+            return true;
+        }
+    };
+
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -91,8 +123,19 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mDeviceOwnerComponent = new ControlDeviceAdminReceiver().getWho(this);
         setupActionBar();
         addPreferencesFromResource(R.xml.preferences);
+        findPreference("disableFingerprintLockscreen").setOnPreferenceChangeListener(sFingerprintLockscreenListener);
+    }
+
+    protected DevicePolicyManager getmDPM(){
+        return mDPM;
+    }
+
+    protected ComponentName getmDeviceOwnerComponent(){
+        return mDeviceOwnerComponent;
     }
 
     /**
