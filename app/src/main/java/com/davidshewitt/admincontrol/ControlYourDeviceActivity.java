@@ -3,18 +3,14 @@ package com.davidshewitt.admincontrol;
 
 import android.annotation.TargetApi;
 import android.app.admin.DevicePolicyManager;
-import android.bluetooth.BluetoothClass;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBar;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 
 import java.util.List;
@@ -39,11 +35,11 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
      * Preference change listener for setting fingerprint policy on the Lock Screen.
      *
      */
-    private static Preference.OnPreferenceChangeListener sFingerprintLockscreenListener = new Preference.OnPreferenceChangeListener() {
+    private static final Preference.OnPreferenceChangeListener sFingerprintLockscreenListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object o) {
-            DevicePolicyManager dpm = ((ControlYourDeviceActivity)preference.getContext()).getmDPM();
-            ComponentName deviceOwnerComponent = ((ControlYourDeviceActivity)preference.getContext()).getmDeviceOwnerComponent();
+            DevicePolicyManager dpm = ((ControlYourDeviceActivity)preference.getContext()).getDPM();
+            ComponentName deviceOwnerComponent = ((ControlYourDeviceActivity)preference.getContext()).getDeviceOwnerComponent();
             boolean bValue = (Boolean)o;
             int keyguardDisabledFeatures;
             if(bValue){
@@ -60,35 +56,6 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         }
     };
 
-    /**
-     * A preference value change listener that updates the preference's summary
-     * to reflect its new value.
-     */
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
-
-            if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
-
-                // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
-
-            } else {
-                // For all other preferences, set the summary to the value's
-                // simple string representation.
-                preference.setSummary(stringValue);
-            }
-            return true;
-        }
-    };
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -97,27 +64,6 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
     private static boolean isXLargeTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
-    }
-
-    /**
-     * Binds a preference's summary to its value. More specifically, when the
-     * preference's value is changed, its summary (line of text below the
-     * preference title) is updated to reflect the value. The summary is also
-     * immediately updated upon calling this method. The exact display format is
-     * dependent on the type of preference.
-     *
-     * @see #sBindPreferenceSummaryToValueListener
-     */
-    private static void bindPreferenceSummaryToValue(Preference preference) {
-        // Set the listener to watch for value changes.
-        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
-
-        // Trigger the listener immediately with the preference's
-        // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
     }
 
     @Override
@@ -130,11 +76,11 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         findPreference("disableFingerprintLockscreen").setOnPreferenceChangeListener(sFingerprintLockscreenListener);
     }
 
-    protected DevicePolicyManager getmDPM(){
+    private DevicePolicyManager getDPM(){
         return mDPM;
     }
 
-    protected ComponentName getmDeviceOwnerComponent(){
+    private ComponentName getDeviceOwnerComponent(){
         return mDeviceOwnerComponent;
     }
 
@@ -144,7 +90,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            // Show the back button in the action bar.
+            // Do not show the back button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
     }
