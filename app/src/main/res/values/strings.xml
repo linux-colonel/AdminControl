@@ -4,10 +4,10 @@
     <!-- General app descriptions -->
     <string name="activity_device_admin_label">Additional Security Settings</string>
     <string name="permission_device_admin_label">Admin Control</string>
-    <string name="device_admin_description">Android has APIs for fine-grained control of the security of your device.
-    This permission allows the app to access those APIs.
+    <string name="device_admin_description">Allow the app to control the usage of the Fingerprint
+        Reader.
     </string>
 
     <!-- settings labels -->
-    <string name="pref_disable_fingerprint_label">Disable fingerprint on Lock Screen</string>
+    <string name="pref_disable_fingerprint_label">Disable Fingerprint on Lock Screen</string>
 </resources>
