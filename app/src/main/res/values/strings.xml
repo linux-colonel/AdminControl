@@ -2,7 +2,7 @@
     <string name="app_name">AdminControl</string>
 
     <!-- General app descriptions -->
-    <string name="activity_device_admin_label">Advanced Security Settings</string>
+    <string name="activity_device_admin_label">Additional Security Settings</string>
     <string name="permission_device_admin_label">Admin Control</string>
     <string name="device_admin_description">Android has APIs for fine-grained control of the security of your device.
     This permission allows the app to access those APIs.

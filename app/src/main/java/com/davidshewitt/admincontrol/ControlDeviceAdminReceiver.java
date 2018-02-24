@@ -1,5 +1,5 @@
 /*
- * AdminControl - Advanced security settings for your Android device.
+ * AdminControl - Additional security settings for your Android device.
  * Copyright (C) 2018 Dave Hewitt
  *
  * This program is free software: you can redistribute it and/or modify it
