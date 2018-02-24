@@ -1,20 +1,17 @@
 package com.davidshewitt.admincontrol;
 
 
-import android.annotation.TargetApi;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
 
-
-import java.util.List;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -28,7 +25,7 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
-    static final int ACTIVATION_REQUEST = 1;
+    private static final int ACTIVATION_REQUEST = 1;
     private DevicePolicyManager mDPM;
     private ComponentName mDeviceOwnerComponent;
 
@@ -70,12 +67,32 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout);
         mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
         mDeviceOwnerComponent = new ControlDeviceAdminReceiver().getWho(this);
         setupActionBar();
         promptDeviceAdmin();
-        addPreferencesFromResource(R.xml.preferences);
-        findPreference("disableFingerprintLockscreen").setOnPreferenceChangeListener(sFingerprintLockscreenListener);
+    }
+
+    /**
+     * This method stops fragment injection in malicious applications.
+     * Make sure to deny any unknown fragments here.
+     */
+    protected boolean isValidFragment(String fragmentName) {
+        return PreferenceFragment.class.getName().equals(fragmentName)
+                || DevControlPreferenceFragment.class.getName().equals(fragmentName);
+    }
+
+
+    public static class DevControlPreferenceFragment extends PreferenceFragment
+        {
+        @Override
+        public void onCreate(final Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+            findPreference("disableFingerprintLockscreen").setOnPreferenceChangeListener(sFingerprintLockscreenListener);
+        }
+
     }
 
     private DevicePolicyManager getDPM(){
@@ -116,13 +133,5 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         return isXLargeTablet(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.pref_headers, target);
-    }
 
 }
