@@ -49,16 +49,8 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
             ComponentName deviceOwnerComponent =
                     ((ControlYourDeviceActivity)preference.getContext()).getDeviceOwnerComponent();
             boolean bValue = (Boolean)o;
-            int keyguardDisabledFeatures;
-            if(bValue){
-                keyguardDisabledFeatures =
-                        dpm.getKeyguardDisabledFeatures(deviceOwnerComponent)
-                                | DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT;
-            } else {
-                keyguardDisabledFeatures =
-                        dpm.getKeyguardDisabledFeatures(deviceOwnerComponent)
-                                & (~DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT);
-            }
+            int keyguardDisabledFeatures =
+                    determineKeyguardDisabledFeatures(dpm, deviceOwnerComponent, bValue);
             try {
                 dpm.setKeyguardDisabledFeatures(deviceOwnerComponent, keyguardDisabledFeatures);
             } catch (SecurityException s) {
@@ -107,6 +99,31 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
 
     private DevicePolicyManager getDPM() {
         return mDPM;
+    }
+
+    /**
+     * Takes into account any other already disabled keyguard features when disabling fingerprints.
+     * @param dpm The DevicePolicyManager in use.
+     * @param deviceOwnerComponent The ComponentName for the device owner component.
+     * @param fingerprintDisabled True if disabling fingerprints, false otherwise.
+     * @return An integer representing the disabled keyguard features.
+     * @see <a href=https://developer.android.com/reference/android/app/admin/DevicePolicyManager.html#setKeyguardDisabledFeatures(android.content.ComponentName,%20int)>Device Admin API</a>
+     */
+    private static int determineKeyguardDisabledFeatures(
+            DevicePolicyManager dpm,
+            ComponentName deviceOwnerComponent,
+            boolean fingerprintDisabled) {
+        int keyguardDisabledFeatures;
+        if(fingerprintDisabled){
+            keyguardDisabledFeatures =
+                    dpm.getKeyguardDisabledFeatures(deviceOwnerComponent)
+                            | DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT;
+        } else {
+            keyguardDisabledFeatures =
+                    dpm.getKeyguardDisabledFeatures(deviceOwnerComponent)
+                            & (~DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT);
+        }
+        return keyguardDisabledFeatures;
     }
 
     /**
