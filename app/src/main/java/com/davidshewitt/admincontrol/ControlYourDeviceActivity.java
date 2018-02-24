@@ -50,7 +50,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
                     ((ControlYourDeviceActivity)preference.getContext()).getDeviceOwnerComponent();
             boolean bValue = (Boolean)o;
             int keyguardDisabledFeatures =
-                    KeyguardFeatures.determineKeyguardDisabledFeatures(
+                    KeyguardFeatures.setFingerprintDisabled(
                             dpm.getKeyguardDisabledFeatures(deviceOwnerComponent), bValue);
             try {
                 dpm.setKeyguardDisabledFeatures(deviceOwnerComponent, keyguardDisabledFeatures);

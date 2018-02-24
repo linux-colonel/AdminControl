@@ -14,7 +14,7 @@ class KeyguardFeatures {
      * @return An integer representing the disabled keyguard features.
      * @see <a href=https://developer.android.com/reference/android/app/admin/DevicePolicyManager.html#setKeyguardDisabledFeatures(android.content.ComponentName,%20int)>Device Admin API</a>
      */
-    static int determineKeyguardDisabledFeatures(
+    static int setFingerprintDisabled(
             int currentDisabledFeatures,
             boolean fingerprintDisabled) {
                 int keyguardDisabledFeatures;
