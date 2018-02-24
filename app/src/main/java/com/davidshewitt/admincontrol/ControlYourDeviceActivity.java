@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
-
+    static final int ACTIVATION_REQUEST = 1;
     private DevicePolicyManager mDPM;
     private ComponentName mDeviceOwnerComponent;
 
@@ -72,6 +73,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
         mDeviceOwnerComponent = new ControlDeviceAdminReceiver().getWho(this);
         setupActionBar();
+        promptDeviceAdmin();
         addPreferencesFromResource(R.xml.preferences);
         findPreference("disableFingerprintLockscreen").setOnPreferenceChangeListener(sFingerprintLockscreenListener);
     }
@@ -92,6 +94,17 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         if (actionBar != null) {
             // Do not show the back button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(false);
+        }
+    }
+
+    /**
+     * Checks if the app has DeviceAdmin and prompts if it does not.
+     * */
+    private void promptDeviceAdmin(){
+        if (! mDPM.isAdminActive(mDeviceOwnerComponent)){
+            Intent requestDeviceAdminIntent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            requestDeviceAdminIntent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceOwnerComponent);
+            startActivityForResult(requestDeviceAdminIntent, ACTIVATION_REQUEST);
         }
     }
 
