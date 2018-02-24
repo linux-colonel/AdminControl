@@ -6,6 +6,7 @@ import android.content.Intent;
 
 public class ControlDeviceAdminReceiver extends DeviceAdminReceiver {
 
+    /*
     @Override
     public void onPasswordFailed(Context context, Intent intent) {
 
@@ -15,4 +16,5 @@ public class ControlDeviceAdminReceiver extends DeviceAdminReceiver {
     public void onPasswordSucceeded(Context context, Intent intent) {
 
     }
+    */
 }

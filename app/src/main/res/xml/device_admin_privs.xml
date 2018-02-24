@@ -1,7 +1,7 @@
 <device-admin>
     <uses-policies>
         <disable-keyguard-features/>
-        <watch-login />
+        <!--watch-login /-->
         <!-- wipe-data/-->
     </uses-policies>
 </device-admin>
