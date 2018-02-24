@@ -1,49 +1,63 @@
-package com.davidshewitt.admincontrol;
+/*
+ * AdminControl - Advanced security settings for your Android device.
+ * Copyright (C) 2018 Dave Hewitt
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
+package com.davidshewitt.admincontrol;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
 
-
 /**
- * A {@link PreferenceActivity} that presents a set of application settings. On
- * handset devices, settings are presented as a single list. On tablets,
- * settings are split by category, with category headers shown to the left of
- * the list of settings.
- * <p>
- * See <a href="http://developer.android.com/design/patterns/settings.html">
- * Android Design: Settings</a> for design guidelines and the <a
- * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
- * API Guide</a> for more information on developing a Settings UI.
+ * A {@link PreferenceActivity} that lets the user control advanced security settings on their
+ * device.
  */
 public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
     private static final int ACTIVATION_REQUEST = 1;
+
     private DevicePolicyManager mDPM;
     private ComponentName mDeviceOwnerComponent;
 
     /**
      * Preference change listener for setting fingerprint policy on the Lock Screen.
-     *
      */
-    private static final Preference.OnPreferenceChangeListener sFingerprintLockscreenListener = new Preference.OnPreferenceChangeListener() {
+    private static final Preference.OnPreferenceChangeListener sFingerprintLockscreenListener =
+            new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object o) {
             DevicePolicyManager dpm = ((ControlYourDeviceActivity)preference.getContext()).getDPM();
-            ComponentName deviceOwnerComponent = ((ControlYourDeviceActivity)preference.getContext()).getDeviceOwnerComponent();
+            ComponentName deviceOwnerComponent =
+                    ((ControlYourDeviceActivity)preference.getContext()).getDeviceOwnerComponent();
             boolean bValue = (Boolean)o;
             int keyguardDisabledFeatures;
             if(bValue){
-                keyguardDisabledFeatures = dpm.getKeyguardDisabledFeatures(deviceOwnerComponent) | DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT;
+                keyguardDisabledFeatures =
+                        dpm.getKeyguardDisabledFeatures(deviceOwnerComponent)
+                                | DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT;
             } else {
-                keyguardDisabledFeatures = dpm.getKeyguardDisabledFeatures(deviceOwnerComponent) & (~DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT);
+                keyguardDisabledFeatures =
+                        dpm.getKeyguardDisabledFeatures(deviceOwnerComponent)
+                                & (~DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT);
             }
             try {
                 dpm.setKeyguardDisabledFeatures(deviceOwnerComponent, keyguardDisabledFeatures);
@@ -54,14 +68,27 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         }
     };
 
+    /**
+     * Main preference fragment.
+     */
+    public static class DevControlPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(final Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+            findPreference("disableFingerprintLockscreen")
+                    .setOnPreferenceChangeListener(sFingerprintLockscreenListener);
+        }
+
+    }
 
     /**
-     * Helper method to determine if the device has an extra-large screen. For
-     * example, 10" tablets are extra-large.
+     * This method stops fragment injection in malicious applications.
      */
-    private static boolean isXLargeTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return PreferenceFragment.class.getName().equals(fragmentName)
+                || DevControlPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     @Override
@@ -74,33 +101,25 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         promptDeviceAdmin();
     }
 
-    /**
-     * This method stops fragment injection in malicious applications.
-     * Make sure to deny any unknown fragments here.
-     */
-    protected boolean isValidFragment(String fragmentName) {
-        return PreferenceFragment.class.getName().equals(fragmentName)
-                || DevControlPreferenceFragment.class.getName().equals(fragmentName);
+    private ComponentName getDeviceOwnerComponent() {
+        return mDeviceOwnerComponent;
     }
 
-
-    public static class DevControlPreferenceFragment extends PreferenceFragment
-        {
-        @Override
-        public void onCreate(final Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
-            findPreference("disableFingerprintLockscreen").setOnPreferenceChangeListener(sFingerprintLockscreenListener);
-        }
-
-    }
-
-    private DevicePolicyManager getDPM(){
+    private DevicePolicyManager getDPM() {
         return mDPM;
     }
 
-    private ComponentName getDeviceOwnerComponent(){
-        return mDeviceOwnerComponent;
+    /**
+     * Checks if the app has DeviceAdmin and prompts if it does not.
+     * */
+    private void promptDeviceAdmin(){
+        if (! mDPM.isAdminActive(mDeviceOwnerComponent)) {
+            Intent requestDeviceAdminIntent =
+                    new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            requestDeviceAdminIntent
+                    .putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceOwnerComponent);
+            startActivityForResult(requestDeviceAdminIntent, ACTIVATION_REQUEST);
+        }
     }
 
     /**
@@ -113,25 +132,4 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
     }
-
-    /**
-     * Checks if the app has DeviceAdmin and prompts if it does not.
-     * */
-    private void promptDeviceAdmin(){
-        if (! mDPM.isAdminActive(mDeviceOwnerComponent)){
-            Intent requestDeviceAdminIntent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-            requestDeviceAdminIntent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceOwnerComponent);
-            startActivityForResult(requestDeviceAdminIntent, ACTIVATION_REQUEST);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean onIsMultiPane() {
-        return isXLargeTablet(this);
-    }
-
-
 }
