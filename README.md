@@ -4,9 +4,6 @@ This app allows you to control features that are in the
 [Android Device Admin API](https://developer.android.com/guide/topics/admin/device-admin.html)
  but not present in Settings.
  
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
-      alt="Get it on Google Play" 
-      height="80">](https://play.google.com/store/apps/details?id=com.davidshewitt.admincontrol)
 [<img src="https://f-droid.org/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/packages/com.davidshewitt.admincontrol/) 
