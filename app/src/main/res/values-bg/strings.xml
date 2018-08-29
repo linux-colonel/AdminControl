@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">АдминКонтрол</string>
+
+    <!-- General app descriptions -->
+    <string name="activity_device_admin_label">Допълнителни Настройки За Сигурност</string>
+    <string name="permission_device_admin_label">Админ Контрол</string>
+    <string name="device_admin_description">Позволи на приложението да използва четеца за пръстов отпечатък.</string>
+
+    <!-- settings labels -->
+    <string name="pref_disable_fingerprint_label">Спри пръстовиянотпечатък на заключен екран</string>
+</resources>
