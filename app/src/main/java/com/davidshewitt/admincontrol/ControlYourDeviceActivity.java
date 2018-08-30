@@ -21,12 +21,14 @@ package com.davidshewitt.admincontrol;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 
 /**
  * A {@link PreferenceActivity} that lets the user control advanced security settings on their
@@ -91,7 +93,9 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
         mDeviceOwnerComponent = new ControlDeviceAdminReceiver().getWho(this);
         setupActionBar();
-        promptDeviceAdmin();
+        if  (! hasDeviceAdmin()) {
+            showPermissionExplanation();
+        }
     }
 
     private ComponentName getDeviceOwnerComponent() {
@@ -102,27 +106,44 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         return mDPM;
     }
 
+    private boolean hasDeviceAdmin() { return mDPM.isAdminActive(mDeviceOwnerComponent);}
+
     /**
      * Checks if the app has DeviceAdmin and prompts if it does not.
      * */
-    private void promptDeviceAdmin(){
-        if (! mDPM.isAdminActive(mDeviceOwnerComponent)) {
+    private void promptDeviceAdmin() {
             Intent requestDeviceAdminIntent =
                     new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
             requestDeviceAdminIntent
                     .putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceOwnerComponent);
             startActivityForResult(requestDeviceAdminIntent, ACTIVATION_REQUEST);
-        }
     }
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+       ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Do not show the back button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
+    }
+
+    /**
+     * Shows the explanation of permissions before requesting them.
+     * */
+    private void showPermissionExplanation(){
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_explain_permissions_title)
+                .setMessage(R.string.dialog_explain_permissions)
+                .setPositiveButton(R.string.dialog_continue, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                       promptDeviceAdmin();
+                    }
+                    })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .show();
     }
 }

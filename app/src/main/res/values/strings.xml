@@ -10,4 +10,10 @@
 
     <!-- settings labels -->
     <string name="pref_disable_fingerprint_label">Disable Fingerprint on Lock Screen</string>
+
+    <!-- dialogs -->
+    <string name="dialog_explain_permissions_title">Requesting permissions</string>
+    <string name="dialog_explain_permissions">This app needs Device Administrator permissions in order to disable the use of the fingerprint on the lockscreen.  Nothing else is done with this permission.  This app has NO network access so it is impossible to control it remotely.</string>
+    <string name="dialog_continue">Continue</string>
+    <string name="dialog_cancel">Cancel</string>
 </resources>

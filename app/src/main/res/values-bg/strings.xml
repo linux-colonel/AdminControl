@@ -8,4 +8,10 @@
 
     <!-- settings labels -->
     <string name="pref_disable_fingerprint_label">Спри пръстовиянотпечатък на заключен екран</string>
+
+    <!-- dialogs -->
+    <string name="dialog_explain_permissions_title">Заявяване на разрешения</string>
+    <string name="dialog_explain_permissions">Това приложение се нуждае от разрешения за администратор на устройството, за да деактивирате използването на пръстовия отпечатък на заключващия екран. Нищо друго не се прави с това разрешение. Това приложение няма достъп до мрежата, така че е невъзможно да се контролира отдалечено.</string>
+    <string name="dialog_continue">продължи</string>
+    <string name="dialog_cancel">Отказ</string>
 </resources>
