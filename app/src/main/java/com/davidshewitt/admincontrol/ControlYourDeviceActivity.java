@@ -47,9 +47,14 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
             new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object o) {
-            DevicePolicyManager dpm = ((ControlYourDeviceActivity)preference.getContext()).getDPM();
-            ComponentName deviceOwnerComponent =
-                    ((ControlYourDeviceActivity)preference.getContext()).getDeviceOwnerComponent();
+            ControlYourDeviceActivity mainPrefActivity =
+                ((ControlYourDeviceActivity)preference.getContext());
+            if  (! mainPrefActivity.hasDeviceAdmin()) {
+                mainPrefActivity.showPermissionExplanation();
+            }
+
+            DevicePolicyManager dpm = mainPrefActivity.getDPM();
+            ComponentName deviceOwnerComponent = mainPrefActivity.getDeviceOwnerComponent();
             boolean bValue = (Boolean)o;
             int keyguardDisabledFeatures =
                     KeyguardFeatures.setFingerprintDisabled(
@@ -93,9 +98,6 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
         mDeviceOwnerComponent = new ControlDeviceAdminReceiver().getWho(this);
         setupActionBar();
-        if  (! hasDeviceAdmin()) {
-            showPermissionExplanation();
-        }
     }
 
     private ComponentName getDeviceOwnerComponent() {
@@ -106,10 +108,13 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         return mDPM;
     }
 
+    /**
+     * Checks if the app has device admin privs.
+     * */
     private boolean hasDeviceAdmin() { return mDPM.isAdminActive(mDeviceOwnerComponent);}
 
     /**
-     * Checks if the app has DeviceAdmin and prompts if it does not.
+     * Show android system dialog to request device admin permission.
      * */
     private void promptDeviceAdmin() {
             Intent requestDeviceAdminIntent =
