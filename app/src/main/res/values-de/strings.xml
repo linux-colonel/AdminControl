@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">AdminControl</string>
+
+    <!-- General app descriptions -->
+    <string name="activity_device_admin_label">Zusätzliche Sicherheitseinstellungen</string>
+    <string name="permission_device_admin_label">Admin Control</string>
+    <string name="device_admin_description">Erlaube des der App, die Verwendung des Fingerabdrucksensor
+        zu steuern.
+    </string>
+
+    <!-- settings labels -->
+    <string name="pref_disable_fingerprint_label">Finderabdrucksenor im Sperrbildschirm deaktiveren</string>
+    <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts">Lösche das
+        Gerät, wenn 10 Mal das falsche Passwort/PIN/Muster zum Entsperren eingegeben wurde.</string>
+
+    <!-- dialogs -->
+    <string name="dialog_explain_permissions_title">Berechtigungen anfordern</string>
+    <string name="dialog_explain_permissions">Die App benötigt \"Geräteverwaltungs"-Berechtigungen,
+        um den Fingerabdrucksensor auf dem Sperrbildschirm zu deaktivieren oder um das Gerät nach
+        zu vielen falschen Entsperrpasswörtern/PINs/Muster zu löschen. Leider weiß ich nicht, wie
+        ich nur die Berechtigungen anfordern kann, die wirklich durch die gerade aktivierten Optionen
+        wirklich gebraucht werden - deswegen muss ich leider nach allen Berechtigungen fragen.
+        Diese App hat KEINEN Netzwerkzugang und kann deswegen nicht von außen (Internet, lokales Netzwerk, …)
+        gesteuert/gehackt werden.</string>
+    <string name="dialog_continue">Berechtigungen erlauben</string>
+    <string name="dialog_cancel">Abbrechen</string>
+</resources>
