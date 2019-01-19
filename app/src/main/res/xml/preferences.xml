@@ -8,7 +8,8 @@
 
     <SwitchPreference
         android:defaultValue="false"
-        android:singleLineTitle="false"
         android:key="wipeAfterTooManyIncorrectDeviceUnlockPasswordAttempts"
-        android:title="@string/pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts" />
+        android:title="@string/pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts"
+        android:summary="@string/pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts_summary"/>
+
 </PreferenceScreen>
