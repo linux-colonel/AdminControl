@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Contrôle Admin</string>
+
+    <!-- General app descriptions -->
+    <string name="activity_device_admin_label">Paramètres additionnels de sécurité</string>
+    <string name="permission_device_admin_label">Contrôle Admin</string>
+    <string name="device_admin_description">Autoriser l\'application à contrôler l\'usage du lecteur d\'empreinte digitale.</string>
+
+    <!-- settings labels -->
+    <string name="pref_disable_fingerprint_label">Désactiver les empreintes digitales sur l\'écran de verrouillage</string>
+
+    <!-- dialogs -->
+    <string name="dialog_explain_permissions_title">Demande des permissions</string>
+    <string name="dialog_explain_permissions">Cette application nécessite les permissions Admininistateurs de l\'appareil afin de désactiver l\'utilisation de l\'empreinte digitale sur l\'écran de verrouillage. Rien d\'autre ne sera fait avec cette permission. Cette application n\'a AUCUN accès au réseau, donc il est impossible de la contrôler à distance.</string>
+    <string name="dialog_continue">Continuer</string>
+    <string name="dialog_cancel">Annuler</string>
+</resources>
