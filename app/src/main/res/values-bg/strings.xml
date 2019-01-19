@@ -8,6 +8,7 @@
 
     <!-- settings labels -->
     <string name="pref_disable_fingerprint_label">Спри пръстовиянотпечатък на заключен екран</string>
+    <string name="pref_wipe_after_too_many_incorrect_device_unlock_password_attempts">Избършете устройството след като сте въвели 20 неправилни пароли за отключване на устройството</string>
 
     <!-- dialogs -->
     <string name="dialog_explain_permissions_title">Заявяване на разрешения</string>

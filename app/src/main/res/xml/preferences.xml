@@ -9,6 +9,6 @@
     <SwitchPreference
         android:defaultValue="false"
         android:singleLineTitle="false"
-        android:key="wipeDeviceAfterFailedPasswordAttempts"
-        android:title="@string/pref_wipe_device_after_failed_password_attemps" />
+        android:key="wipeAfterTooManyIncorrectDeviceUnlockPasswordAttempts"
+        android:title="@string/pref_wipe_after_too_many_incorrect_device_unlock_password_attempts" />
 </PreferenceScreen>
