@@ -26,4 +26,9 @@
         control it remotely.</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_ok">Ok</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="please_reinstall">This app could not execute the necessary function for wiping
+        the device after a specific number of device-unlock password/PIN/pattern tries. Please
+        remove this app from Device Administrator, uninstall it and reinstall it.</string>
 </resources>

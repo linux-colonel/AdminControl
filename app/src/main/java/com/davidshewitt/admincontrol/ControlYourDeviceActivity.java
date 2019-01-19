@@ -29,12 +29,15 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 /**
  * A {@link PreferenceActivity} that lets the user control advanced security settings on their
  * device.
  */
 public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
+    public static String LOG_TAG = "com.davidshewitt.admincontrol";
+
     private static final int ACTIVATION_REQUEST = 1;
 
     private DevicePolicyManager mDPM;
@@ -82,10 +85,19 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
             int maxTries = (Boolean) o ? MAX_TRIES_FOR_DEVICE_UNLOCK_PASSWORDS : DISABLE_DEVICE_UNLOCK_PROTECTION;
 
             if (mainPrefActivity.hasDeviceAdmin()) {
-                dpm.setMaximumFailedPasswordsForWipe(deviceOwnerComponent, maxTries);
-                return true;
+                try {
+                    dpm.setMaximumFailedPasswordsForWipe(deviceOwnerComponent, maxTries);
+                    return true;
+                } catch (SecurityException e) {
+                    Log.e(LOG_TAG, "setMaximumFailedPasswordsForWipe failed", e);
+                    new AlertDialog.Builder(mainPrefActivity)
+                            .setTitle(R.string.dialog_error_title)
+                            .setMessage(R.string.please_reinstall)
+                            .setPositiveButton(R.string.dialog_ok, null)
+                            .show();
+                    return false;
+                }
             }
-
             mainPrefActivity.showPermissionExplanation();
             return false;
         }
