@@ -29,6 +29,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
+
+import java.util.logging.Logger;
 
 /**
  * A {@link PreferenceActivity} that lets the user control advanced security settings on their
@@ -68,6 +71,27 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         }
     };
 
+    private static final Preference.OnPreferenceChangeListener sWipeAfterIncorrectPasswordListener =
+            new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object o) {
+            ControlYourDeviceActivity mainPrefActivity =
+                    ((ControlYourDeviceActivity) preference.getContext());
+
+            DevicePolicyManager dpm = mainPrefActivity.getDPM();
+            ComponentName deviceOwnerComponent = mainPrefActivity.getDeviceOwnerComponent();
+            int maxTries = (Boolean) o ? 3 : 0;
+
+            if (mainPrefActivity.hasDeviceAdmin()) {
+                dpm.setMaximumFailedPasswordsForWipe(deviceOwnerComponent, maxTries);
+                return true;
+            }
+
+            mainPrefActivity.showPermissionExplanation();
+            return false;
+        }
+    };
+
     /**
      * Main preference fragment.
      */
@@ -78,6 +102,8 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.preferences);
             findPreference("disableFingerprintLockscreen")
                     .setOnPreferenceChangeListener(sFingerprintLockscreenListener);
+            findPreference("wipeAfterTooManyIncorrectDeviceUnlockPasswordAttempts")
+                    .setOnPreferenceChangeListener(sWipeAfterIncorrectPasswordListener);
         }
 
     }
