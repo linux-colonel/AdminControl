@@ -15,15 +15,14 @@
 
     <!-- dialogs -->
     <string name="dialog_explain_permissions_title">Requesting permissions</string>
-    <string name="dialog_explain_permissions">Това приложение се нуждае от разрешения за
-        администратор на устройства в да забраните използването на пръстовия отпечатък върху
-        заключващия екран и да изтриете устройството след твърде много неправилна парола за
-        отключване на устройството. С това разрешение не се прави нищо друго. За съжаление не знам
-        как да поискам само необходимите разрешения за избрания в момента опции (напр. само
-        деактивиране на функциите за защита на клавиатурата за \"Деактивиране на пръстовите
-        отпечатъци…" и само watch-login / wipe-data за \"Избършете устройството…\" - затова искам
-        всичките три устройства Разрешения на администратор в една. Това приложение няма достъп
-        до мрежата, така че е невъзможно контролирайте от разстояние.</string>
+    <string name="dialog_explain_permissions">This app needs Device Administrator permissions in
+        order to disable the use of the fingerprint on the lockscreen and for wiping the device
+        after too many incorrect device-unlock password. Nothing else is done with this permission.
+        Sadly I don\'t know how to request only the necessary permissions for the current selected
+        options (e.g. only disable-keyguard-features for \"Disable Fingerprint…\"
+        and only watch-login/wipe-data for \"Wipe device…\" - that why I request all three Device
+        Administrator permissions at one. This app has NO network access so it is impossible to
+        control it remotely.</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_cancel">Cancel</string>
 </resources>
