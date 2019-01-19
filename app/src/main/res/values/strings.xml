@@ -10,6 +10,7 @@
 
     <!-- settings labels -->
     <string name="pref_disable_fingerprint_label">Disable Fingerprint on Lock Screen</string>
+    <string name="pref_wipe_device_after_failed_password_attemps">Wipe device after 20 incorrect device-unlock passwords has been entered</string>
 
     <!-- dialogs -->
     <string name="dialog_explain_permissions_title">Requesting permissions</string>

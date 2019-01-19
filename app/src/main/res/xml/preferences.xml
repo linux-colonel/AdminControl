@@ -5,4 +5,10 @@
         android:defaultValue="false"
         android:key="disableFingerprintLockscreen"
         android:title="@string/pref_disable_fingerprint_label" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:singleLineTitle="false"
+        android:key="wipeDeviceAfterFailedPasswordAttempts"
+        android:title="@string/pref_wipe_device_after_failed_password_attemps" />
 </PreferenceScreen>
