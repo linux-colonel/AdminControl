@@ -29,9 +29,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-
-import java.util.logging.Logger;
 
 /**
  * A {@link PreferenceActivity} that lets the user control advanced security settings on their
@@ -71,6 +68,8 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         }
     };
 
+    public static final int MAX_TRIES_FOR_DEVICE_UNLOCK_PASSWORDS = 10;
+    public static final int DISABLE_DEVICE_UNLOCK_PROTECTION = 0;
     private static final Preference.OnPreferenceChangeListener sWipeAfterIncorrectPasswordListener =
             new Preference.OnPreferenceChangeListener() {
         @Override
@@ -80,7 +79,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
 
             DevicePolicyManager dpm = mainPrefActivity.getDPM();
             ComponentName deviceOwnerComponent = mainPrefActivity.getDeviceOwnerComponent();
-            int maxTries = (Boolean) o ? 10 : 0;
+            int maxTries = (Boolean) o ? MAX_TRIES_FOR_DEVICE_UNLOCK_PASSWORDS : DISABLE_DEVICE_UNLOCK_PROTECTION;
 
             if (mainPrefActivity.hasDeviceAdmin()) {
                 dpm.setMaximumFailedPasswordsForWipe(deviceOwnerComponent, maxTries);

@@ -9,7 +9,8 @@
     <!-- settings labels -->
     <string name="pref_disable_fingerprint_label">Спри пръстовиянотпечатък на заключен екран</string>
     <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts">Избършете
-        устройството след 10 неправилни парола за отключване на устройството / игли / шаблони</string>
+        устройството след 10 неправилни парола за отключване на устройството / игли / шаблони.
+        Android обикновено показва предупреждение, ако имате само 4 или по-малко опита.</string>
 
     <!-- dialogs -->
     <string name="dialog_explain_permissions_title">Заявяване на разрешения</string>
