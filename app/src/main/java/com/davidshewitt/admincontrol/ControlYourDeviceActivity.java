@@ -89,7 +89,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
                     dpm.setMaximumFailedPasswordsForWipe(deviceOwnerComponent, maxTries);
                     return true;
                 } catch (SecurityException e) {
-                    Log.e(LOG_TAG, "setMaximumFailedPasswordsForWipe failed", e);
+                    Log.e(LOG_TAG, "DevicePolicyManager.setMaximumFailedPasswordsForWipe failed", e);
                     new AlertDialog.Builder(mainPrefActivity)
                             .setTitle(R.string.dialog_error_title)
                             .setMessage(R.string.please_reinstall)
