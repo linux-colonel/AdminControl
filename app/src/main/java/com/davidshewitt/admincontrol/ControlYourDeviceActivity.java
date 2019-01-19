@@ -80,7 +80,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
 
             DevicePolicyManager dpm = mainPrefActivity.getDPM();
             ComponentName deviceOwnerComponent = mainPrefActivity.getDeviceOwnerComponent();
-            int maxTries = (Boolean) o ? 3 : 0;
+            int maxTries = (Boolean) o ? 10 : 0;
 
             if (mainPrefActivity.hasDeviceAdmin()) {
                 dpm.setMaximumFailedPasswordsForWipe(deviceOwnerComponent, maxTries);
