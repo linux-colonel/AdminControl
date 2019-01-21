@@ -9,7 +9,7 @@
     <!-- settings labels -->
     <string name="pref_disable_fingerprint_label">Finderabdrucksenor im Sperrbildschirm deaktiveren</string>
     <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts">Nach 10 fehlgeschlagenen Ensperrversuchen Gerät löschen</string>
-    <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts_summary">Aktiviert eine integrierte Richtlinie, die eine Geräte- oder Profillöschung durchführt, nachdem 10 falsche Kennwörter für die Geräteentsperrung (oder PINs, Muster) eingegeben wurden. Android zeigt normalerweise eine Warnung an, wenn Sie noch vier oder weniger Unlock-Versuche haben. Auf meinem Nexus 7 2013 (LineageOS 14.1, Custom Recovery TWRP) musste ich die Option "Sicheres Starten" deaktivieren, damit TWRP meine Daten löschen konnte. Bei "Sicherer Start" forderte mich TWRP zur Eingabe meines Passworts auf, bevor meine Daten gelöscht wurden (=> Ich konnte das Löschen dadurch abbrechen).</string>
+    <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts_summary">Aktiviert eine integrierte Richtlinie, die eine Geräte- oder Profillöschung durchführt, nachdem 10 falsche Kennwörter (oder PINs, Muster) für die Geräteentsperrung eingegeben wurden. Android zeigt normalerweise eine Warnung an, wenn Sie noch vier oder weniger Unlock-Versuche haben. Wenn aber der Bootloader des Gerätes entsperrt ist, dann funktioniert entweder das Löschen nicht (weil die TWRP Recovery erst nach dem Passwort fragt, bevor Daten gelöscht werden) oder ein Angreifer kann direkt in die TWRP Recovery booten und ohne Passwortabfrage auf alle Daten zugreifen.</string>
 
     <!-- dialogs -->
     <string name="dialog_explain_permissions_title">Berechtigungen anfordern</string>
