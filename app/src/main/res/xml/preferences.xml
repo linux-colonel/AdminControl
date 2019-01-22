@@ -8,8 +8,27 @@
 
     <SwitchPreference
         android:defaultValue="false"
-        android:key="wipeAfterTooManyIncorrectDeviceUnlockPasswordAttempts"
-        android:title="@string/pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts"
+        android:key="@string/key_wipe_after_too_many_unlock_attempts"
+        android:title="@string/pref_wipe_after_too_many_unlock_attempts_label"
         android:summary="@string/pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts_summary"/>
+
+    <EditTextPreference
+        android:defaultValue="10"
+        android:key="@string/key_max_unlock_attempts_before_wipe"
+        android:title="@string/pref_max_unlock_attempts_before_wipe_label"
+        android:inputType="number"/>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/key_restart_after_too_many_unlock_attempts"
+        android:title="@string/pref_restart_after_too_many_unlock_attempts_label"
+        android:summary="@string/pref_restart_after_too_many_unlock_attempts_summary"/>
+
+    <EditTextPreference
+        android:defaultValue="10"
+        android:key="@string/key_max_unlock_attempts_before_restart"
+        android:title="@string/pref_max_unlock_attempts_before_restart"
+        android:inputType="number"/>
+
 
 </PreferenceScreen>

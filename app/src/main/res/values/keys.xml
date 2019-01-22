@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+
+    <string name="key_max_unlock_attempts_before_restart">max_unlock_attempts_before_restart</string>
+    <string name="key_restart_after_too_many_unlock_attempts">restart_after_too_many_unlock_attempts</string>
+    <string name="key_max_unlock_attempts_before_wipe">max_unlock_attempts_before_wipe</string>
+    <string name="key_wipe_after_too_many_unlock_attempts">wipe_after_too_many_unlock_attempts</string>
+
+</resources>

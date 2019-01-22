@@ -8,8 +8,8 @@
 
     <!-- settings labels -->
     <string name="pref_disable_fingerprint_label">Disable Fingerprint on Lock Screen</string>
-    <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts">Wipe after 10 incorrect unlock tries</string>
-    <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts_summary">Enables a built-in policy that will perform a device or profile wipe after 10 incorrect device-unlock passwords (or PINs, patterns) have been entered. Android usually displays a warning, if you have 4 or less unlock tries left. But when the bootloader of the device is unlocked, either the wipe does not work (because the TWRP recovery will asks for your password before wiping) or an attacker can use the TWRP recovery to access your data without entering any passwords.</string>
+    <string name="pref_wipe_after_too_many_unlock_attempts_label">Wipe after too many incorrect unlock tries</string>
+    <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts_summary">Enables a built-in policy that will perform a device or profile wipe after too many incorrect device-unlock passwords (or PINs, patterns) have been entered. Android usually displays a warning, if you have 4 or less unlock tries left. But when the bootloader of the device is unlocked, either the wipe does not work (because the TWRP recovery will asks for your password before wiping) or an attacker can use the TWRP recovery to access your data without entering any passwords.</string>
 
     <!-- dialogs -->
     <string name="dialog_explain_permissions_title">Requesting permissions</string>
@@ -19,4 +19,9 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_error_title">Error</string>
     <string name="please_reinstall">This app could not execute the necessary function for wiping the device after a specific number of device-unlock password/PIN/pattern tries. Please remove this app from Device Administrator, uninstall it and reinstall it.</string>
+    <string name="dialog_explain_device_owner_permission">The app needs the \'device owner\' permission for restarting the smartphone after too many login tries. First the app tries to get the permission by executing a root command. If this is not successful, you will be directed to the GitHub project containing a manual on how to give \'device owner\' permission to the app.</string>
+    <string name="pref_restart_after_too_many_unlock_attempts_label">Restart after too many incorrect unlock tries</string>
+    <string name="pref_max_unlock_attempts_before_wipe_label">Max unlock attempts before wipe</string>
+    <string name="pref_restart_after_too_many_unlock_attempts_summary">This option only works for Android 7.0 or higher devices.</string>
+    <string name="pref_max_unlock_attempts_before_restart">Max unlock attempts before restart</string>
 </resources>
