@@ -8,10 +8,20 @@
 
     <!-- settings labels -->
     <string name="pref_disable_fingerprint_label">Désactiver les empreintes digitales sur l\'écran de verrouillage</string>
+    <string name="pref_wipe_after_too_many_unlock_attempts_label">Essuyer après trop d\'essais de déverrouillage incorrects</string>
+    <string name="pref_wipe_after_too_many_incorrect_device_unlock_passwords_attempts_summary">Active une stratégie intégrée qui effectuera un effacement de profil ou de périphérique après la saisie d\'un nombre trop élevé de mots de passe de déverrouillage de périphérique (ou de codes PIN, de modèles) incorrects. Android affiche généralement un avertissement si vous avez 4 tentatives de déverrouillage ou moins. Mais lorsque le chargeur de démarrage du périphérique est déverrouillé, l\'effacement ne fonctionne pas (car la récupération TWRP vous demandera votre mot de passe avant l\'effacement) ou un attaquant peut utiliser la récupération TWRP pour accéder à vos données sans entrer de mot de passe.</string>
+    <string name="pref_restart_after_too_many_unlock_attempts_label">Redémarrer après trop d\'essais de déverrouillage incorrects</string>
+    <string name="pref_max_unlock_attempts_before_wipe_label">Max tentatives de déverrouillage avant essuyage</string>
+
 
     <!-- dialogs -->
     <string name="dialog_explain_permissions_title">Demande des permissions</string>
     <string name="dialog_explain_permissions">Cette application nécessite les permissions Admininistateurs de l\'appareil afin de désactiver l\'utilisation de l\'empreinte digitale sur l\'écran de verrouillage. Rien d\'autre ne sera fait avec cette permission. Cette application n\'a AUCUN accès au réseau, donc il est impossible de la contrôler à distance.</string>
     <string name="dialog_continue">Continuer</string>
+    <string name="dialog_ok">D\`accord</string>
+    <string name="dialog_error_title">Erreur</string>    
     <string name="dialog_cancel">Annuler</string>
+    <string name="dialog_explain_device_owner_permission">L\'application a besoin de l\'autorisation du propriétaire du périphérique pour redémarrer le smartphone après un nombre excessif d\'essais de connexion. Tout d\'abord, l\'application essaie d\'obtenir l\'autorisation en exécutant une commande racine. Si cela échoue, vous serez dirigé vers la page du projet GitHub contenant un manuel expliquant comment accorder l\'autorisation du propriétaire du périphérique à l\'application.</string>
+    <string name="pref_restart_after_too_many_unlock_attempts_summary">Cette option ne fonctionne que sur les appareils Android 7.0 ou supérieurs. Remarque importante: le périphérique ne peut pas être redémarré pendant un appel téléphonique.</string>
+    <string name="pref_max_unlock_attempts_before_restart">Max tentatives de déverrouillage avant le redémarrage</string>
 </resources>

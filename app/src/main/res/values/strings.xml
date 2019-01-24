@@ -18,7 +18,6 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_error_title">Error</string>
-    <string name="please_reinstall">This app could not execute the necessary function for wiping the device after a specific number of device-unlock password/PIN/pattern tries. Please remove this app from Device Administrator, uninstall it and reinstall it.</string>
     <string name="dialog_explain_device_owner_permission">The app needs the \'device owner\' permission for restarting the smartphone after too many login tries. First the app tries to get the permission by executing a root command. If this is not successful, you will be directed to the GitHub project page containing a manual on how to give \'device owner\' permission to the app.</string>
     <string name="pref_restart_after_too_many_unlock_attempts_label">Restart after too many incorrect unlock tries</string>
     <string name="pref_max_unlock_attempts_before_wipe_label">Max unlock attempts before wipe</string>
