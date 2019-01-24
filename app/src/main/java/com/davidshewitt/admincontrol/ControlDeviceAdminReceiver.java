@@ -79,7 +79,7 @@ public class ControlDeviceAdminReceiver extends DeviceAdminReceiver {
         int maxAttempts = NumberUtils.toInt(_maxAttempts, DEFAULT_MAX_UNLOCK_ATTEMPTS_BEFORE_RESTART);
 
         int currentFailedPasswordAttempts = dpm.getCurrentFailedPasswordAttempts();
-        if (currentFailedPasswordAttempts <= maxAttempts) {
+        if (currentFailedPasswordAttempts < maxAttempts) {
             Log.i(LOG_TAG, "current failed password attempts: " + currentFailedPasswordAttempts);
             Log.i(LOG_TAG, "max failed attempts for reboot: " + maxAttempts);
             return;
