@@ -34,6 +34,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -69,6 +71,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
 
             DevicePolicyManager dpm = mainPrefActivity.getDPM();
             ComponentName deviceOwnerComponent = mainPrefActivity.getDeviceOwnerComponent();
+
             boolean bValue = (Boolean)o;
             int keyguardDisabledFeatures =
                     KeyguardFeatures.setFingerprintDisabled(
@@ -218,6 +221,31 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
         mDeviceOwnerComponent = new ControlDeviceAdminReceiver().getWho(this);
         setupActionBar();
+
+
+        findViewById(R.id.revoke_device_ownership_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getDPM().isDeviceOwnerApp(getDeviceOwnerComponent().getPackageName())) {
+                    getDPM().clearDeviceOwnerApp(getDeviceOwnerComponent().getPackageName());
+                    Toast.makeText(getApplicationContext(), "Device-owner permission successfully revoked.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "App has no device-owner permission - abort action. Long press button to force action.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        findViewById(R.id.revoke_device_ownership_button).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                try {
+                    getDPM().clearDeviceOwnerApp(getDeviceOwnerComponent().getPackageName());
+                } catch (SecurityException e) {
+                    Log.e(LOG_TAG, "Could not remove device owner permission", e);
+                    Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+        });
     }
 
     private ComponentName getDeviceOwnerComponent() {

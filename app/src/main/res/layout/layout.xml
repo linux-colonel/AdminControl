@@ -9,4 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         class="com.davidshewitt.admincontrol.ControlYourDeviceActivity$DevControlPreferenceFragment"/>
+
+    <Button
+        android:id="@+id/revoke_device_ownership_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Revoke device ownership"/>
 </LinearLayout>
