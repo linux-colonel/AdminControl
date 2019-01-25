@@ -227,8 +227,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
             @Override
             public void onClick(View v) {
                 if (getDPM().isDeviceOwnerApp(getDeviceOwnerComponent().getPackageName())) {
-                    getDPM().clearDeviceOwnerApp(getDeviceOwnerComponent().getPackageName());
-                    Toast.makeText(getApplicationContext(), "Device-owner permission successfully revoked.", Toast.LENGTH_SHORT).show();
+                    removeDeviceOwnershipWithFeedback();
                 } else {
                     Toast.makeText(getApplicationContext(), "App has no device-owner permission - abort action. Long press button to force action.", Toast.LENGTH_SHORT).show();
                 }
@@ -237,15 +236,20 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         findViewById(R.id.revoke_device_ownership_button).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                try {
-                    getDPM().clearDeviceOwnerApp(getDeviceOwnerComponent().getPackageName());
-                } catch (SecurityException e) {
-                    Log.e(LOG_TAG, "Could not remove device owner permission", e);
-                    Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
+                removeDeviceOwnershipWithFeedback();
                 return true;
             }
         });
+    }
+
+    private void removeDeviceOwnershipWithFeedback() {
+        try {
+            getDPM().clearDeviceOwnerApp(getDeviceOwnerComponent().getPackageName());
+            Toast.makeText(getApplicationContext(), "Device-owner permission successfully revoked.", Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Log.e(LOG_TAG, "Could not remove device owner permission", e);
+            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private ComponentName getDeviceOwnerComponent() {
