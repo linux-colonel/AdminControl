@@ -16,6 +16,7 @@
         android:defaultValue="10"
         android:key="@string/key_max_unlock_attempts_before_wipe"
         android:title="@string/pref_max_unlock_attempts_before_wipe_label"
+        android:selectAllOnFocus="true"
         android:inputType="number"/>
 
     <SwitchPreference
@@ -28,6 +29,7 @@
         android:defaultValue="10"
         android:key="@string/key_max_unlock_attempts_before_restart"
         android:title="@string/pref_max_unlock_attempts_before_restart"
+        android:selectAllOnFocus="true"
         android:inputType="number"/>
 
 
