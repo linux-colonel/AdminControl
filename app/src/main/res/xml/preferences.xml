@@ -17,7 +17,9 @@
         android:key="@string/key_max_unlock_attempts_before_wipe"
         android:title="@string/pref_max_unlock_attempts_before_wipe_label"
         android:selectAllOnFocus="true"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:dependency="wipe_after_too_many_unlock_attempts"
+        />
 
     <SwitchPreference
         android:defaultValue="false"
@@ -30,7 +32,9 @@
         android:key="@string/key_max_unlock_attempts_before_restart"
         android:title="@string/pref_max_unlock_attempts_before_restart"
         android:selectAllOnFocus="true"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:dependency="@string/key_restart_after_too_many_unlock_attempts"
+        />
 
 
 </PreferenceScreen>
