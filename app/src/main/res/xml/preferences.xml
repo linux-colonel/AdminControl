@@ -3,7 +3,7 @@
 
     <SwitchPreference
         android:defaultValue="false"
-        android:key="disableFingerprintLockscreen"
+        android:key="@string/key_disable_fingerprint_on_lockscreen"
         android:title="@string/pref_disable_fingerprint_label" />
 
     <SwitchPreference
@@ -18,7 +18,7 @@
         android:title="@string/pref_max_unlock_attempts_before_wipe_label"
         android:selectAllOnFocus="true"
         android:inputType="number"
-        android:dependency="wipe_after_too_many_unlock_attempts"
+        android:dependency="@string/key_wipe_after_too_many_unlock_attempts"
         />
 
     <SwitchPreference

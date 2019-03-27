@@ -173,7 +173,7 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
-            findPreference("disableFingerprintLockscreen")
+            findPreference(getString(R.string.key_disable_fingerprint_on_lockscreen))
                     .setOnPreferenceChangeListener(sFingerprintLockscreenListener);
             findPreference(getString(R.string.key_wipe_after_too_many_unlock_attempts))
                     .setOnPreferenceChangeListener(sWipeAfterTooManyUnlockAttemptsListener);
