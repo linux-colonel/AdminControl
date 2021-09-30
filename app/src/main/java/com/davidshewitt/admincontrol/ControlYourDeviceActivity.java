@@ -19,8 +19,6 @@
 package com.davidshewitt.admincontrol;
 
 import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,35 +36,21 @@ import androidx.appcompat.app.AlertDialog;
 public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
     private static final int ACTIVATION_REQUEST = 1;
 
-    private DevicePolicyManager mDPM;
-    private ComponentName mDeviceOwnerComponent;
+    private AdminControls adminControls;
 
     /**
      * Preference change listener for setting fingerprint policy on the Lock Screen.
      */
-    private static final Preference.OnPreferenceChangeListener sFingerprintLockscreenListener =
-            new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object o) {
-            ControlYourDeviceActivity mainPrefActivity =
-                ((ControlYourDeviceActivity)preference.getContext());
-            if  (! mainPrefActivity.hasDeviceAdmin()) {
-                mainPrefActivity.showPermissionExplanation();
-            }
+    private static final Preference.OnPreferenceChangeListener sFingerprintLockscreenListener
+            = (preference, newValue) -> {
+        ControlYourDeviceActivity activity = ((ControlYourDeviceActivity) preference.getContext());
 
-            DevicePolicyManager dpm = mainPrefActivity.getDPM();
-            ComponentName deviceOwnerComponent = mainPrefActivity.getDeviceOwnerComponent();
-            boolean bValue = (Boolean)o;
-            int keyguardDisabledFeatures =
-                    KeyguardFeatures.setFingerprintDisabled(
-                            dpm.getKeyguardDisabledFeatures(deviceOwnerComponent), bValue);
-            try {
-                dpm.setKeyguardDisabledFeatures(deviceOwnerComponent, keyguardDisabledFeatures);
-            } catch (SecurityException s) {
-                return false;
-            }
-            return true;
+        if (!activity.adminControls.hasDeviceAdmin()) {
+            activity.showPermissionExplanation();
+            return false;
         }
+
+        return activity.adminControls.setFingerprintEnabled(!(Boolean) newValue);
     };
 
     /**
@@ -74,15 +58,16 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
      * and forcing strong authentication for the next unlock.
      */
     private static final Preference.OnPreferenceClickListener lockNowListener = preference -> {
-        ControlYourDeviceActivity mainPrefActivity =
-                ((ControlYourDeviceActivity)preference.getContext());
-        try {
-            mainPrefActivity.getDPM().lockNow();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            return true;
+        ControlYourDeviceActivity activity = ((ControlYourDeviceActivity)preference.getContext());
+
+        if (!activity.adminControls.hasDeviceAdmin()) {
+            activity.showPermissionExplanation();
+            return false;
         }
-        mainPrefActivity.finish();
+
+        if (activity.adminControls.lockRequiringStrongAuth()) {
+            activity.finish();
+        }
         return true;
     };
 
@@ -115,33 +100,20 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout);
-        mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-        mDeviceOwnerComponent = new ControlDeviceAdminReceiver().getWho(this);
+        adminControls = new AdminControls(this);
         setupActionBar();
     }
 
-    private ComponentName getDeviceOwnerComponent() {
-        return mDeviceOwnerComponent;
-    }
-
-    private DevicePolicyManager getDPM() {
-        return mDPM;
-    }
-
-    /**
-     * Checks if the app has device admin privs.
-     * */
-    private boolean hasDeviceAdmin() { return mDPM.isAdminActive(mDeviceOwnerComponent);}
-
     /**
      * Show android system dialog to request device admin permission.
-     * */
+     */
     private void promptDeviceAdmin() {
-            Intent requestDeviceAdminIntent =
-                    new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-            requestDeviceAdminIntent
-                    .putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceOwnerComponent);
-            startActivityForResult(requestDeviceAdminIntent, ACTIVATION_REQUEST);
+        Intent requestDeviceAdminIntent =
+                new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+        requestDeviceAdminIntent
+                .putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,
+                        adminControls.getDeviceOwnerComponent());
+        startActivityForResult(requestDeviceAdminIntent, ACTIVATION_REQUEST);
     }
 
     /**
