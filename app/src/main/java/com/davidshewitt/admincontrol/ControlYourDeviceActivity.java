@@ -21,6 +21,7 @@ package com.davidshewitt.admincontrol;
 import android.app.admin.DevicePolicyManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -50,7 +51,13 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
             return false;
         }
 
-        return activity.adminControls.setFingerprintEnabled(!(Boolean) newValue);
+        if (activity.adminControls.setFingerprintEnabled(!(Boolean) newValue)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                FingerprintToggleTileService.triggerUpdate(activity);
+            }
+            return true;
+        }
+        return false;
     };
 
     /**

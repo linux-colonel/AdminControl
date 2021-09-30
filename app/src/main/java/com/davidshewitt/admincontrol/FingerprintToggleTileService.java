@@ -1,5 +1,7 @@
 package com.davidshewitt.admincontrol;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Build;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
@@ -11,23 +13,17 @@ public class FingerprintToggleTileService extends TileService {
 
     private AdminControls adminControls;
 
-    private boolean listening;
+    public static void triggerUpdate(Context context) {
+        requestListeningState(context,
+                new ComponentName(context, FingerprintToggleTileService.class));
+    }
 
     @Override
     public void onStartListening() {
-        listening = true;
-
         updateTile();
     }
 
-    @Override
-    public void onStopListening() {
-        listening = false;
-    }
-
     private void updateTile() {
-        if (!listening) return;
-
         AdminControls adminControls = getAdminControls();
 
         boolean enabled = adminControls.isFingerprintEnabled();
@@ -45,17 +41,19 @@ public class FingerprintToggleTileService extends TileService {
     @Override
     public void onClick() {
         if (isLocked()) {
-            unlockAndRun(this::toggle);
+            unlockAndRun(() -> {
+                toggle();
+                triggerUpdate(this);
+            });
         } else {
             toggle();
+            updateTile();
         }
     }
 
     private void toggle() {
         AdminControls adminControls = getAdminControls();
         adminControls.setFingerprintEnabled(!adminControls.isFingerprintEnabled());
-
-        updateTile();
     }
 
     private AdminControls getAdminControls() {
