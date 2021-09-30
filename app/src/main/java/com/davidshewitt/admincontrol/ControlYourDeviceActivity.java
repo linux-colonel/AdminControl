@@ -70,6 +70,23 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
     };
 
     /**
+     * Preference click listener for locking the screen
+     * and forcing strong authentication for the next unlock.
+     */
+    private static final Preference.OnPreferenceClickListener lockNowListener = preference -> {
+        ControlYourDeviceActivity mainPrefActivity =
+                ((ControlYourDeviceActivity)preference.getContext());
+        try {
+            mainPrefActivity.getDPM().lockNow();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            return true;
+        }
+        mainPrefActivity.finish();
+        return true;
+    };
+
+    /**
      * Main preference fragment.
      */
     public static class DevControlPreferenceFragment extends PreferenceFragment {
@@ -79,6 +96,8 @@ public class ControlYourDeviceActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.preferences);
             findPreference("disableFingerprintLockscreen")
                     .setOnPreferenceChangeListener(sFingerprintLockscreenListener);
+            findPreference("lockNow")
+                    .setOnPreferenceClickListener(lockNowListener);
         }
 
     }

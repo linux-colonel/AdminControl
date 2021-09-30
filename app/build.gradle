@@ -12,6 +12,9 @@ android {
         versionName "1.0.4"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
+    lintOptions {
+        lintConfig file("lint.xml")
+    }
     buildTypes {
         release {
             minifyEnabled true

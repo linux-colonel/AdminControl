@@ -5,4 +5,9 @@
         android:defaultValue="false"
         android:key="disableFingerprintLockscreen"
         android:title="@string/pref_disable_fingerprint_label" />
+
+    <Preference
+        android:key="lockNow"
+        android:summary="@string/pref_lock_now_description"
+        android:title="@string/pref_lock_now_label" />
 </PreferenceScreen>
