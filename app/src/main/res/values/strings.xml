@@ -17,6 +17,7 @@
     <string name="tile_fingerprint_toggle_label">Fingerprint toggle</string>
     <string name="tile_fingerprint_enabled_label">Fingerprint enabled</string>
     <string name="tile_fingerprint_disabled_label">Fingerprint disabled</string>
+    <string name="tile_lock_now_label">Lock screen securely</string>
 
     <!-- dialogs -->
     <string name="dialog_explain_permissions_title">Requesting permissions</string>
