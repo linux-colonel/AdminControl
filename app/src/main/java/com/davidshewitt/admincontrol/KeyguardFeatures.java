@@ -27,4 +27,8 @@ class KeyguardFeatures {
         }
         return keyguardDisabledFeatures;
     }
+
+    static boolean isFingerprintDisabled(int disabledFeatures) {
+        return (disabledFeatures & DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT) != 0;
+    }
 }

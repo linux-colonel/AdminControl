@@ -38,6 +38,17 @@
             </intent-filter>
 
         </receiver>
+
+        <service
+            android:name=".FingerprintToggleTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_fingerprint"
+            android:label="@string/tile_fingerprint_toggle_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

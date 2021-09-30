@@ -26,6 +26,11 @@ public class AdminControls {
         return devicePolicyManager.isAdminActive(deviceOwnerComponent);
     }
 
+    public boolean isFingerprintEnabled() {
+        return !KeyguardFeatures.isFingerprintDisabled(
+                devicePolicyManager.getKeyguardDisabledFeatures(deviceOwnerComponent));
+    }
+
     public boolean setFingerprintEnabled(boolean enabled) {
         int features = KeyguardFeatures.setFingerprintDisabled(
                 devicePolicyManager.getKeyguardDisabledFeatures(deviceOwnerComponent), !enabled);
