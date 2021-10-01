@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AdminControl</string>
+
+    <!-- General app descriptions -->
+    <string name="activity_device_admin_label">Дополнительные настройки безопасности</string>
+    <string name="permission_device_admin_label">Admin Control</string>
+    <string name="device_admin_description">Позволять приложению управлять использованием сканера отпечатков пальцев.</string>
+
+    <!-- settings labels -->
+    <string name="pref_disable_fingerprint_label">Отключить отпечаток пальца на экране блокировки</string>
+    <string name="pref_lock_now_label">Надежно заблокировать экран сейчас</string>
+    <string name="pref_lock_now_description">Требовать надёжную аутентификацию для следующей разблокировки</string>
+
+    <!-- tiles -->
+    <string name="tile_fingerprint_toggle_label">Переключатель отпечатка</string>
+    <string name="tile_fingerprint_enabled_label">Отпечаток включён</string>
+    <string name="tile_fingerprint_disabled_label">Отпечаток пальца отключён</string>
+    <string name="tile_lock_now_label">Заблокировать экран надёжно</string>
+
+    <!-- dialogs -->
+    <string name="dialog_explain_permissions_title">Запрос разрешений</string>
+    <string name="dialog_explain_permissions">Этому приложению требуются разрешения Администратора Устройства, чтобы отключать использование отпечатка пальца на экране блокировки.  Больше ничего не делается с этим разрешением.  Это приложение НЕ имеет доступа к сети, поэтому управлять им удаленно невозможно.</string>
+    <string name="dialog_continue">Продолжить</string>
+    <string name="dialog_cancel">Отмена</string>
+</resources>
